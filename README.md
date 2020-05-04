@@ -1,6 +1,6 @@
 # Terraform & AWS SAM integration example
 
-This repo demonstrates how you can integrate Terraform infrastructure deployment with an [AWS SAM Application](https://github.com/rpstreef/aws-sam-node-example/tree/master/dependencies/nodejs). 
+This repo demonstrates how you can integrate Terraform infrastructure deployment with an [AWS SAM Application](https://github.com/rpstreef/aws-sam-node-example/). 
 
 The main reasons for this combination:
 
