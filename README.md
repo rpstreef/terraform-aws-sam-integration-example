@@ -1,8 +1,14 @@
-# OpenAPI with AWS API Gateway, Lambda, Cognito, SNS and CloudWatch logs
+# Terraform & AWS SAM integration example
 
-This repo only deploys the infrastructure via Terraform. The source code, [this](https://github.com/rpstreef/openapi-node-example) repo, will be deployed automatically via AWS CodePipeline. By default, it's configured to automatically deploy at every push to the master branch.
+This repo demonstrates how you can integrate Terraform infrastructure deployment with an [AWS SAM Application](https://github.com/rpstreef/aws-sam-node-example/tree/master/dependencies/nodejs). 
 
-Check the companion articles series '_OpenAPI_' on [dev.to](https://dev.to/rolfstreefkerk/openapi-with-terraform-on-aws-api-gateway-17je).
+The main reasons for this combination:
+
+- AWS SAM ease of local development and testing with official AWS developed Docker containers for AWS Lambda, API Gateway and DynamoDB.
+- AWS SAM concept of a Serverless Application that can be shared in their repository
+- AWS SAM and AWS CodeDeploy integration, allows for Blue/Green deployments with AWS CloudWatch alarms and deployment phase monitoring for the best deployment experience and reliability.
+- Terraform use of a modular approach resulting in reusable code (DRY). CloudFormation relies on hard to maintain includes or simply copy/paste of code.
+- Terraform wide range of AWS services support through AWS CLI as API. In some cases AWS CLI (and by extension, Terraform) supports certain AWS Services earlier than CloudFormation.
 
 # Get started
 
@@ -50,7 +56,7 @@ There are no costs associated with deploying any of this on AWS, there is [Free 
 The following services are deployed with Terraform;
 - AWS Cognito
 - AWS IAM
-- (Added) CloudWatch Alarms, costs will be incurred for enabling Detailed Monitoring for API Gateway (!)
-- (Added) AWS CodePipeline, and CodeBuild with Github as source repository. There's a free tier for:
+- AWS CloudWatch Alarms, costs will be incurred for enabling Detailed Monitoring for API Gateway (!)
+- AWS CodePipeline, CodeBuild, and CodeDeploy with Github as source repository. There's a free tier for:
   - [CodeBuild](https://aws.amazon.com/codebuild/pricing/), 100 build minutes of ```build.general1.small``` per month.
-  - [AWS CodePipeline](https://aws.amazon.com/codepipeline/pricing/): 1 free pipeline active per month. 
+  - [AWS CodePipeline](https://aws.amazon.com/codepipeline/pricing/): 1 free pipeline active per month. New pipeline's free for the first 30 days.
