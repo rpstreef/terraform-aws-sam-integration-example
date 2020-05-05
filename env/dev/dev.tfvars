@@ -15,11 +15,11 @@ stack_name = "dev-example-sam-app"
 # Github
 # Prompt for github_token, do not store in Source repo
 github_owner        = "rpstreef"
-github_repo         = "openapi-node-example"
+github_repo         = "aws-sam-node-example"
 poll_source_changes = "true"
 
 # API Gateway
-api_gateway_rest_api_id = "unknown"         # !Importan: Set after AWS SAM is deployed
+api_gateway_rest_api_id = "unknown" # !Importan: Set after AWS SAM is deployed
 api_name                = "dev-example-api"
 api_stage               = "dev"
 api_resources = {
