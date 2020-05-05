@@ -22,25 +22,32 @@ The main reasons for this combination:
 - Setup your AWS local profile, see [this](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-profiles.html) guide how it's done.
 - Manually setup an AWS S3 Bucket for Terraform state storage.
 
-## To get the API running
+## How to get it running
+
 If you meet all the pre-requisites, do the following
 
 - In your AWS development account create the S3 bucket for your Terraform state files.
   - Optionally, encrypt the S3 bucket and enable versioning such that you can do a rollback.
-- ```git clone``` this repo.
+- ``git clone`` this repo.
 - Change your AWS credentials profile name in these files: 
-  - ```./env/dev/remote-backend.tf```
-  - ```./env/dev/dev.tfvars```
-- Run ``` npm install ``` and then execute ``` npm run dev-init ```, this will:
-  - Initialize the Terraform project for the 'dev' environment, and synchronize the state with the cloud stored .tfstate file.
+  - ``./env/dev/remote-backend.tf``
+  - ``./env/dev/dev.tfvars``
+- Run ``npm install`` and then execute ``npm run dev-init ``, this will:
+  - Initialize the Terraform project for the 'dev' environment, and synchronize the state with the cloud stored .tfstate file (when present).
   - If you run it a second time, it will fail on the workspace creation, this is not an issue (the workspace already exists)
-- Run ```npm run dev-infra``` to prepare the deployment to your AWS account.
-  - Note: this [repo](https://github.com/rpstreef/openapi-node-example) contains the node source code that the CodePipeline will deploy to the AWS Lambda and Lambda-layer.
-  - Confirm with ```yes``` to deploy, anything else will cancel the deployment
+- Run ``npm run dev-infra`` to prepare the deployment to your AWS account.
+  - Note: this [repo](https://github.com/rpstreef/aws-sam-node-example/) contains the AWS SAM template, AWS Lambda NodeJS source code, and the OpenAPI specification. These will automatically get deployed by AWS CodePipeline. But it requires a few steps after that to "connect" Terraform with AWS SAM.
+  - Confirm with ``yes`` to deploy, anything else will cancel the deployment
+  - The deployment will have errors; ``Error adding new Lambda Permission``, this is normal. It's because AWS SAM hasn't deployed the Lambda functions yet.
+- Run `dev-output-sam` to get a status update on the AWS SAM deployment in property ``StackStatus``
+  - When the deployment is finished, we can see the Stack output in the property ``Outputs``, match that with the ``dev.tfvars`` file.
+- Run ``dev-infra`` again after updating the ``dev.tfvars`` with the correct input
+  - Make sure the property ``Parameters`` corresponds with the output of Terraform. If it isn't the case update the ``configuration.json`` file in the AWS SAM example [repo](https://github.com/rpstreef/aws-sam-node-example/).
+- Redeploy Terraform with ``dev-infra``, this will add the AWS Lambda execution permissions to the API Gateway endpoints.
+
+That's all done!
 
 See my full guide on dev.to for more information about this project
-
-ps. I'm aware the gulp file doesn't exit nicely, i'm not an expert. Any pull requests or issue reports with pointers is definitely appreciated.
 
 ## VS Code plugins used
 
