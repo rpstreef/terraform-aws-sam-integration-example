@@ -100,3 +100,40 @@ module "user" {
 
   api_gateway_rest_api_id = var.api_gateway_rest_api_id
 }
+
+# -----------------------------------------------------------------------------
+#  Module: Systems Manager Parameter Store
+# -----------------------------------------------------------------------------
+module "ssm_parameters" {
+  source = "github.com/rpstreef/terraform-aws-ssm-parameter-store?ref=master"
+
+  application_name = var.resource_tag_name
+  environment      = var.namespace
+
+  parameters = {
+    "cognito_user_pool_arn" = {
+      "type"  = "String"
+      "value" = module.cognito.cognito_user_pool_arn
+    },
+    "cognito_user_pool_client_id" = {
+      "type"  = "String"
+      "value" = module.cognito.cognito_user_pool_client_id
+    },
+    "cognito_identity_pool_id" = {
+      "type"  = "String"
+      "value" = module.cognito.cognito_identity_pool_id
+    },
+    "identity_role_arn" = {
+      "type"  = "String"
+      "value" = module.identity.iam_arn
+    }
+    "user_role_arn" = {
+      "type"  = "String"
+      "value" = module.user.iam_arn
+    },
+    "sns_topic_arn" = {
+      "type"  = "String"
+      "value" = module.user.sns_topic_arn
+    }
+  }
+}
