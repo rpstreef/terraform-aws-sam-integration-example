@@ -19,7 +19,7 @@ github_repo         = "aws-sam-node-example"
 poll_source_changes = "true"
 
 # API Gateway
-api_gateway_rest_api_id = "unknown" # !Importan: Set after AWS SAM is deployed
+api_gateway_rest_api_id = "qmrgt94w1f" # !Important: Set after AWS SAM is deployed
 api_name                = "dev-example-api"
 api_stage               = "dev"
 api_resources = {
